@@ -15,7 +15,7 @@ program: predicates initial_state goal_state actions;
 
 predicates: 'PREDICATES' (singular_predicate)+;
 
-singular_predicate: '-' name '(' multiple_params ')';
+singular_predicate: name '(' multiple_params ')';
 
 name: TOKEN+;
 
@@ -31,7 +31,7 @@ multiple_action_params: action_params*;
 
 actions: 'ACTIONS' singular_action+;
 
-singular_action: '-' action_name '(' multiple_action_params ')' ':' precond effects;
+singular_action: action_name '(' multiple_action_params ')' precond effects;
 	
 precond: 'PRECONDITION:' conjunction;
 

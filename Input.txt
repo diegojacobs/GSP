@@ -1,0 +1,23 @@
+PREDICATES
+  on(A, B)
+  onTable(A)
+  hold(A)
+  clear(A)
+  AE()
+
+INITIAL: on(B, A) ^ onTable(C) ^onTable(D) ^ AE()
+GOAL:  on(B, D) ^ on(C, A)  ^ AE()
+
+ACTIONS
+  Stack(A, B)
+    PRECONDITION: hold(A) ^ clear(B)
+    EFFECTS: AE() ^ !clear(B) ^ !hold(A) ^ on(A, B)
+  Unstack(A, B)
+    PRECONDITION: on(A, B) ^ AE() ^ clear(A)
+    EFFECTS: clear(B) ^ hold(A) ^ !AE()
+  Pickup(A)
+    PRECONDITION: onTable(A) ^ clear(A) ^ AE()
+    EFFECTS: hold(A) ^ !AE()
+  Putdown(A)
+    PRECONDITION: hold(A)
+    EFFECTS: clear(A) ^ AE() ^ onTable(A)

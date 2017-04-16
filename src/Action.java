@@ -3,54 +3,56 @@ import java.util.Arrays;
 
 
 public class Action {
-	private String identifier;
+	private String id;
     private ArrayList<String> params;
-    private ArrayList<Predicate> precond;
+    private ArrayList<Predicate> preconditions;
     private ArrayList<Predicate> effects;
-    private String newIdentifier;
+    private String newId;
 
-    public Action(String identifier) {
-        this.identifier = identifier;
-        this.precond = new ArrayList<Predicate>();
+    public Action(String id) {
+        this.id = id;
+        this.preconditions = new ArrayList<Predicate>();
         this.effects = new ArrayList<Predicate>();
         this.params = new ArrayList<String>();
-        if (identifier.contains("(")) {
-            if (identifier.contains("^")) {
-                String[] ids = identifier.split("\\^");
-                this.identifier = identifier;
+        if (id.contains("(")) {
+            if (id.contains("^")) {
+                String[] ids = id.split("\\^");
+                this.id = id;
                 for (int i = 0; i < ids.length;i++) {
                     String newId = ids[i];
-                    String id = newId.substring(newId.indexOf("(")+1, newId.indexOf(")"));
-                    this.params.addAll(Arrays.asList(id.split(",")));
+                    String id2 = newId.substring(newId.indexOf("(")+1, newId.indexOf(")"));
+                    this.params.addAll(Arrays.asList(id2.split(",")));
                 }
             } else {
-                this.identifier = identifier.substring(0, identifier.indexOf("("));
-                String id = identifier.substring(identifier.indexOf("(")+1, identifier.indexOf(")"));
-                this.params.addAll(Arrays.asList(id.split(",")));
+                this.id = id.substring(0, id.indexOf("("));
+                String id2 = id.substring(id.indexOf("(")+1, id.indexOf(")"));
+                this.params.addAll(Arrays.asList(id2.split(",")));
             }
         }
     }
     
     
     public Action cloneCustom() {
-        Action cloned = new Action(this.getIdentifier());
-        cloned.setParams(this.getParams());
-        cloned.setPrecond(this.getPrecond());
-        cloned.setEffects(this.getEffects());
-        cloned.setNewIdentifier(this.getNewIdentifier());
-        return cloned;
+        Action clone = new Action(this.getId());
+        
+        clone.setParams(this.getParams());
+        clone.setPreconditions(this.getPreconditions());
+        clone.setEffects(this.getEffects());
+        clone.setNewId(this.getNewId());
+        
+        return clone;
     }
 
-    public void setPrecond(ArrayList<Predicate> precond) {
-        this.precond = precond;
+    public void setPreconditions(ArrayList<Predicate> preconditions) {
+        this.preconditions = preconditions;
     }
 
     public void setEffects(ArrayList<Predicate> effects) {
         this.effects = effects;
     }
     
-    public void addPrecond(Predicate precond) {
-        this.precond.add(precond);
+    public void addPrecondition(Predicate precondition) {
+        this.preconditions.add(precondition);
     }
     
     public void addEffect(Predicate effect) {
@@ -65,39 +67,38 @@ public class Action {
         this.params = params;
     }
     
-
     public ArrayList<String> getParams() {
         return params;
     }
     
-    public String getIdentifier() {
-        return identifier;
+    public String getId() {
+        return id;
     }
 
-    public ArrayList<Predicate> getPrecond() {
-        return precond;
+    public ArrayList<Predicate> getPreconditions() {
+        return preconditions;
     }
 
     public ArrayList<Predicate> getEffects() {
         return effects;
     }
 
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getNewIdentifier() {
-        return newIdentifier;
+    public String getNewId() {
+        return newId;
     }
 
-    public void setNewIdentifier(String newIdentifier) {
-        this.newIdentifier = newIdentifier;
+    public void setNewId(String newId) {
+        this.newId = newId;
     }
     
     @Override
     public String toString() {
-        return "Actions{" + "identifier=" + identifier + "\n"+
-               "precond=" + precond + "\n" +
+        return "Actions{" + "id=" + id + "\n"+
+               "preconditions=" + preconditions + "\n" +
                "effects=" + effects + '}';
     }
 }

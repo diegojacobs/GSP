@@ -3,8 +3,8 @@ import java.util.ArrayList;
 
 public class State {
 	private ArrayList<Predicate> state;
-    private String statement;
     private ArrayList<String> blocks;
+    private String statement;
 
     public State() {
         this.state = new ArrayList<Predicate>();
@@ -37,6 +37,6 @@ public class State {
        
     @Override
     public String toString() {
-        return "State{" + "state=" + state + ", blocks=" + blocks + '}';
+        return "State{ " + "state = " + state + ", blocks = " + blocks + '}';
     }
 }

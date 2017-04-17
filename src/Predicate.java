@@ -4,59 +4,60 @@ import java.util.Objects;
 
 
 public class Predicate {
-	private String id;
+	private String name;
     private ArrayList<String> params;
-    private ArrayList<Integer> evaluated;
+    private ArrayList<Integer> paramsReplaced;
 
-    public Predicate(String identifier) 
-    {
+    public Predicate(String name) {
         this.params = new ArrayList<String>();
-        this.evaluated = new ArrayList<Integer>();
-        this.id = identifier;
-    
-        if (identifier.contains("(")) 
-        {
-            if (identifier.contains("^")) 
-            {
-                String[] ids = identifier.split("\\^");
-                this.id = identifier;
-                for (int i = 0; i < ids.length;i++) 
-                {
+        this.paramsReplaced = new ArrayList<Integer>();
+        this.name = name;
+        if (name.contains("(")) {
+            if (name.contains("^")) {
+                String[] ids = name.split("\\^");
+                this.name = name;
+                for (int i = 0; i < ids.length;i++) {
                     String newId = ids[i];
-                    String id = newId.substring(newId.indexOf("(") + 1, newId.indexOf(")"));
+                    String id = newId.substring(newId.indexOf("(")+1, newId.indexOf(")"));
                     this.params.addAll(Arrays.asList(id.split(",")));
                 }
-            } 
-            else 
-            {
-                this.id = identifier.substring(0, identifier.indexOf("("));
-                String id = identifier.substring(identifier.indexOf("(") + 1, identifier.indexOf(")"));
+            } else {
+                this.name = name.substring(0, name.indexOf("("));
+                String id = name.substring(name.indexOf("(")+1, name.indexOf(")"));
                 this.params.addAll(Arrays.asList(id.split(",")));
             }
         }
+           
+        
+    }
+    
+    public Predicate clone(){
+        Predicate p = new Predicate(this.getName());
+        p.setParams((ArrayList<String>)this.getParams().clone());
+        return p;
     }
     
     public boolean valid(int j) {
-        return !this.evaluated.contains(j);
+        return !this.paramsReplaced.contains(j);
     }
     
-    public void addEvalIndex(int j) {
-        this.evaluated.add(j);
+    public void addParamReplaced(int j) {
+        this.paramsReplaced.add(j);
     }
     
-    public void clearEval() {
-        this.evaluated.clear();
+    public void clearParamsReplaced() {
+        this.paramsReplaced.clear();
     }
 
-    public String getIdentifier() {
-        return id;
+    public String getName() {
+        return name;
     }
 
-    public void setIdentifier(String identifier) {
-        this.id = identifier;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public int getCantParams() {
+    public int getNumberOfParams() {
         return params.size();
     }
     
@@ -71,7 +72,7 @@ public class Predicate {
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 13 * hash + Objects.hashCode(this.id);
+        hash = 13 * hash + Objects.hashCode(this.name);
         hash = 13 * hash + Objects.hashCode(this.params);
         return hash;
     }
@@ -85,7 +86,7 @@ public class Predicate {
             return false;
         }
         final Predicate other = (Predicate) obj;
-        if (!Objects.equals(this.id, other.id)) {
+        if (!Objects.equals(this.name, other.name)) {
             return false;
         }
         if (!Objects.equals(this.params, other.params)) {
@@ -96,6 +97,6 @@ public class Predicate {
 
     @Override
     public String toString() {
-        return "Predicate{" + "id = " + id + ", params = " + params +'}';
+        return name + "(" + params + ")";
     }
 }

@@ -5,9 +5,6 @@ PREDICATES
   clear(A)
   AE()
 
-INITIAL: on(B, A) ^ onTable(C) ^onTable(D) ^ AE()
-GOAL:  on(B, D) ^ on(C, A)  ^ AE()
-
 ACTIONS
   Stack(A, B)
     PRECONDITION: hold(A) ^ clear(B)
@@ -21,3 +18,6 @@ ACTIONS
   Putdown(A)
     PRECONDITION: hold(A)
     EFFECTS: clear(A) ^ AE() ^ onTable(A)
+
+INITIAL: on(B, A) ^ onTable(C) ^ AE() ^ onTable(A) ^ clear(C) ^ clear(B)
+GOAL:  on(A, B) ^ on(B, C) 

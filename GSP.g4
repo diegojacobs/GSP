@@ -11,7 +11,7 @@ WS: [\t\r\n\f ]+ -> skip;
 COMMENT: ( '//' ~[\r\n]* '\r'? '\n'	| '/*' .*? '*/') -> skip;								
     
 //PARSER
-program: predicates initial_state goal_state actions;
+program: predicates actions initial_state goal_state;
 
 predicates: 'PREDICATES' (singular_predicate)+;
 
